@@ -8,21 +8,26 @@ motor_right = LargeMotor(OUTPUT_C)
 
 # Define the functions for moving the robot
 
-def move_forward(speed=50):
-    motor_left.on(speed)
-    motor_right.on(speed)
+def move_forward(speedL, speedR, distance):
+    run_time = (distance / 20) * 1000
+    motor_left.on_for_seconds(speedL=speedL, seconds=run_time/1000)
+    motor_right.on_for_seconds(speedR=speedR, seconds=run_time/1000)
 
-def move_backward(speed=50):
-    motor_left.on(-speed)
-    motor_right.on(-speed)
 
-def turn_left(speed=50):
-    motor_left.on(-speed)
-    motor_right.on(speed)
+def move_backward(speedL, speedR, distance):
+    run_time = (distance / 20) * 1000
+    motor_left.on_for_seconds(speedL=-speedL, seconds=run_time/1000)
+    motor_right.on_for_seconds(speedR=-speedR, seconds=run_time/1000)
 
-def turn_right(speed=50):
-    motor_left.on(speed)
-    motor_right.on(-speed)
+def turn_left(speedL, speedR, distance):
+    run_time = (distance / 20) * 1000
+    motor_left.on_for_seconds(speedL=-speedL, seconds=run_time/1000)
+    motor_right.on_for_seconds(speedR=speedR, seconds=run_time/1000)
+
+def turn_right(speedL, speedR, distance):
+    run_time = (distance / 20) * 1000
+    motor_left.on_for_seconds(speedL=speedL, seconds=run_time/1000)
+    motor_right.on_for_seconds(speedR=-speedR, seconds=run_time/1000)
 
 def stop():
     motor_left.off()
