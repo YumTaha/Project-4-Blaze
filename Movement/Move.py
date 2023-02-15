@@ -5,7 +5,7 @@ from time import sleep
 # Set up the motors for controlling the robot
 motor_left = LargeMotor(OUTPUT_B)
 motor_right = LargeMotor(OUTPUT_C)
-#tthgyukjgjhlvhmkf
+
 # Define the functions for moving the robot
 
 def move_forward(speed=50):

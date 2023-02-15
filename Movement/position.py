@@ -1,9 +1,10 @@
-
+#!/usr/bin/env python3
 #This module defines the functions for determining the position of a robot.
-#trgfgfswe
+
 
 from ev3dev2.sensor.lego import GyroSensor
-#hey
+
+
 gyro = GyroSensor()
 
 def get_position():
@@ -16,3 +17,4 @@ def get_position():
     y = 0
     angle = gyro.angle
     return (x, y, angle)
+

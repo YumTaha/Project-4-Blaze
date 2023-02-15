@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 #This is the main file for blaze to work
-from Movement.Move import move_forward, move_backward, turn_left, turn_right, stop
-from Movement.position import get_position
+from Movement.move import * #move_forward, move_backward, turn_left, turn_right, stop
+from Movement.position import * #get_position
+from Movement.error import *
 from time import sleep
 
 
