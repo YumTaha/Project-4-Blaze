@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
-#This module defines the functions for determining the position of a robot.
+from ev3dev2.motor import OUTPUT_A, OUTPUT_B, LargeMotor
 
+def get_position(distance):
+    motor_A = LargeMotor(OUTPUT_A)
+    motor_B = LargeMotor(OUTPUT_B)
 
-from ev3dev2.sensor.lego import GyroSensor
+    # Set the motor speed and run time based on the distance
+    if distance > 0:
+        speed = 360
+        run_time = (distance / 20) * 1000
+    else:
+        speed = -360
+        run_time = (-distance / 20) * 1000
 
+    # Run the motors and wait for them to stop
+    motor_A.on_for_seconds(speed=speed, seconds=run_time/1000)
+    motor_B.on_for_seconds(speed=speed, seconds=run_time/1000)
 
-gyro = GyroSensor()
+    # Calculate the final position relative to the starting position
+    final_x = 0
+    final_y = distance
 
-def get_position():
-
-
-    #Return the current position of the robot as a tuple of (x, y, angle).
-
-    # Implement your position tracking algorithm here using the GyroSensor and other sensors
-    x = 0
-    y = 0
-    angle = gyro.angle
-    return (x, y, angle)
-
+    return final_x, final_y
