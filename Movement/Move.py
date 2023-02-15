@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # Import ev3 libraries
-from ev3dev2.motor import LargeMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C, OUTPUT_D
+from ev3dev2.motor import LargeMotor, OUTPUT_B, OUTPUT_C
 from time import sleep
-
 # Set up the motors for controlling the robot
 motor_left = LargeMotor(OUTPUT_B)
 motor_right = LargeMotor(OUTPUT_C)
@@ -29,7 +28,7 @@ def stop():
     motor_left.off()
     motor_right.off()
 
-# Clean up the motors when the program exits
+# stop and clean everything after motor stops
 def clean_up():
     motor_left.off()
     motor_right
