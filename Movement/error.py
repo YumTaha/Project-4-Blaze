@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 
-def error(n):
+def error(n, y):
     import random
 
-    #maximum travel distance (in cm) and N
-    y = 150
     # position tracker
     x = 0 
     direction = 1 #because the first movement is forward
@@ -24,5 +22,6 @@ def error(n):
         x += distance * direction
 
     # Print the final position
-    print(f"Final position: x = {x} cm")
-    print(f"Number of turns: {int(n) * 2}")
+    print("\nFinal position: x = {:.2f} cm, y = {:.2f} cm".format(x, y))
+    print("Number of turns: {}".format(int(n) * 2))
+
