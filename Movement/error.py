@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 def error(laps, pos_on, pos_back):
     import random
 

@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
 
-#from Movement.coordinates import *
-from Movement.sounds import beep, speaker, finished
-from Movement.drive import drive_back, drive_straight
-from Movement.error import error
 
-def main():
-    distance = 30 # \
-    speed = 10    #  |=> YOU CAN CHANGE THESE VARIABLES
-    laps = 2      # /
+from Movement.sounds import beep, speaker, finished
+from Movement.drive import drive_back, drive_straight, turn_degree
+from Movement.error import error
+from time import sleep
+#from Movement.turn import turn
+
+#ALL VARIABLES THAT YOU CAN CHANGE
+distance = 40       # \
+speed = 10          #  |=> YOU CAN CHANGE THESE VARIABLES
+laps = 3            # /
+degrees = 180  #/
+
+# SUBTASK 1A
+def subtask1A():
   
     pos_straight, pos_negative = [], [] #________________________DO NOT TOUCH_____________________________
 
@@ -16,14 +22,14 @@ def main():
     beep()
     for i in range(laps):
         print("\nLap ", i+1)
+
         # Drive forward .. cm at ..% speed
-        #drive_straight(distance, speed)
         pos1 = drive_straight(distance, speed) #get the date for the Ys 
         print("Required forward distance (mm): ", distance*10)
         print("Traveled distance (mm): {:.1f}", pos1)
         pos_straight.append(pos1)
+
         # Drive reverse .. cm at ..% speed
-        #drive_back(distance, speed)
         pos2 = drive_back(distance, speed) #get the date for the Ys 
         print("Required return distance (mm): ", -distance*10)
         print("Return distance (mm): {:.1f}", pos2)
@@ -33,6 +39,17 @@ def main():
     error(laps, pos_straight, pos_negative)
     finished()
     
+# SUBTASK 1B
+def subtask1B():
+    beep()
+    drive_straight(distance, speed)
+    for i in range(laps):
+        turn_degree(degrees-1, speed)
+        drive_straight(distance, speed)
+    turn_degree(degrees-1, speed)
+
 
 if __name__ == "__main__":#________________________DO NOT TOUCH_____________________________
-    main()
+    #subtask1A()
+    #subtask1B()
+    pass

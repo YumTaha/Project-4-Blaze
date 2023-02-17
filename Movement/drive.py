@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from ev3dev2.motor import OUTPUT_A, OUTPUT_D, LargeMotor
 from ev3dev2.sensor.lego import GyroSensor
 from ev3dev2.sensor import INPUT_2
@@ -8,8 +6,12 @@ from math import pi
 #gyro reset
 gyro = GyroSensor(INPUT_2)
 gyro.reset()
+gyro_angle_initial = gyro.angle
+
 
 def drive_straight(distance_cm, speed):
+    global gyro_angle_initial
+
     wheel_diameter_mm = 68.9
     wheel_circumference_mm = pi * wheel_diameter_mm
     target_distance_mm = distance_cm * 10  # convert cm to mm
@@ -25,9 +27,9 @@ def drive_straight(distance_cm, speed):
 
     left_speed = speed
     right_speed = speed
-
+    
     while True:
-        angle = gyro.angle
+        angle = gyro.angle - gyro_angle_initial
 
         if abs(angle) > 1:
             if angle > 0:
@@ -50,9 +52,12 @@ def drive_straight(distance_cm, speed):
             right_motor.off(brake=True)
             break
 
+
     return (left_motor.rotations) * (pi * wheel_diameter_mm)
 
 def drive_back(distance_cm, speed):
+    global gyro_angle_initial
+
     wheel_diameter_mm = 68.9
     wheel_circumference_mm = pi * wheel_diameter_mm
     target_distance_mm = distance_cm * 10  # convert cm to mm
@@ -68,7 +73,7 @@ def drive_back(distance_cm, speed):
     right_speed = speed
 
     while True:
-        angle = gyro.angle
+        angle = gyro.angle - gyro_angle_initial
 
         if abs(angle) > 1:
             if angle > 0:
@@ -93,4 +98,41 @@ def drive_back(distance_cm, speed):
 
     return (left_motor.rotations) * (pi * wheel_diameter_mm)
     
+def turn_degree(degrees, speed):
+    global gyro_angle_initial
 
+    gyro.mode = gyro.modes[1]
+
+    left_motor = LargeMotor(OUTPUT_A)
+    right_motor = LargeMotor(OUTPUT_D)
+
+    left_motor.reset()
+    right_motor.reset()
+
+    if degrees > 0:
+        left_speed = -speed
+        right_speed = speed
+    else:
+        left_speed = speed
+        right_speed = -speed
+
+    while True:
+        angle = gyro.angle - gyro_angle_initial
+
+        if abs(angle - degrees) > 1:
+            if angle > degrees:
+                left_speed = -speed
+                right_speed = speed
+            else:
+                left_speed = speed
+                right_speed = -speed
+
+            left_motor.on(speed=left_speed)
+            right_motor.on(speed=right_speed)
+        else:
+            gyro.reset()
+            left_motor.off(brake=True)
+            right_motor.off(brake=True)
+
+
+            break
