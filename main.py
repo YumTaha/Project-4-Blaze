@@ -1,31 +1,38 @@
 #!/usr/bin/env python3
 
-#run command (brickrun -r ./Project-4-Blaze-/Main/main.py)
-#This is the main file for blaze to work
+#from Movement.coordinates import *
+from Movement.sounds import beep, speaker, finished
+from Movement.drive import drive_back, drive_straight
+from Movement.error import error
 
-from Movement.move import * #move_forward, move_backward, turn_left, turn_right, stop (THE FIRST ONES TAKE 3 ARGUMENTS (LEFT SPEED AND RIGHT SPEED and distance))
-from Movement.error import * #error
-from Movement.sounds import *
-from Movement.coordinates import *
-from time import sleep
+def main():
+    distance = 30 # \
+    speed = 10    #  |=> YOU CAN CHANGE THESE VARIABLES
+    laps = 2      # /
+  
+    pos_straight, pos_negative = [], [] #________________________DO NOT TOUCH_____________________________
 
-distance = int(input("Y? "))
-speed = int(input("speed? "))
-laps = int(input("Laps? "))
-wheel = Wheel(diameter_mm=68.8, width_mm=36)
-rotations_for_mm = distance / wheel.circumference_mm
+    speaker()
+    beep()
+    for i in range(laps):
+        print("\nLap ", i+1)
+        # Drive forward .. cm at ..% speed
+        #drive_straight(distance, speed)
+        pos1 = drive_straight(distance, speed) #get the date for the Ys 
+        print("Required forward distance (mm): ", distance*10)
+        print("Traveled distance (mm): {:.1f}", pos1)
+        pos_straight.append(pos1)
+        # Drive reverse .. cm at ..% speed
+        #drive_back(distance, speed)
+        pos2 = drive_back(distance, speed) #get the date for the Ys 
+        print("Required return distance (mm): ", -distance*10)
+        print("Return distance (mm): {:.1f}", pos2)
+        pos_negative.append(pos2)
 
-speaker()
-
-for n in range(1, laps+1):
+    #predict final position
+    error(laps, pos_straight, pos_negative)
+    finished()
     
-    print("\nLap " + str(n) + ":")
-    move_forward(speed, speed, rotations_for_mm) 
-    move_backward(speed, speed, rotations_for_mm) 
-    
-clean_up()
-sleep(2)
 
-error(laps, distance) #output the error
-
-
+if __name__ == "__main__":#________________________DO NOT TOUCH_____________________________
+    main()
