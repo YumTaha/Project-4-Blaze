@@ -6,7 +6,8 @@ def error(laps, pos_on, pos_back):
     finalY = 0 #initialize the position
 
     for i in range(len(pos_on)):
-
+        
+        #add the error to the
         finalY += pos_on[i] + pos_back[i]
 
 
