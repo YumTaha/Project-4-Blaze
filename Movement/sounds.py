@@ -5,7 +5,7 @@ def beep():
     beep.beep()
 def speaker():
     sound = Sound()
-    sound.speak('Hey I am BLAZE')
+    sound.speak('I am BLAZE')
 def finished():
     sound = Sound()
     sound.speak('Done')

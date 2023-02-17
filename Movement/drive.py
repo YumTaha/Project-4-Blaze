@@ -9,7 +9,7 @@ gyro.reset()
 gyro_angle_initial = gyro.angle
 
 
-def drive_straight(distance_cm, speed):
+def drive_straight(distance_cm, speed): #___________________DRIVE STRAIGHT_______________________
     global gyro_angle_initial
 
     wheel_diameter_mm = 68.9
@@ -55,7 +55,7 @@ def drive_straight(distance_cm, speed):
 
     return (left_motor.rotations) * (pi * wheel_diameter_mm)
 
-def drive_back(distance_cm, speed):
+def drive_back(distance_cm, speed): #___________________DRIVE REVERSE_______________________
     global gyro_angle_initial
 
     wheel_diameter_mm = 68.9
@@ -98,7 +98,7 @@ def drive_back(distance_cm, speed):
 
     return (left_motor.rotations) * (pi * wheel_diameter_mm)
     
-def turn_degree(degrees, speed):
+def turn_degree(degrees, speed): #___________________TURN_______________________
     global gyro_angle_initial
 
     gyro.mode = gyro.modes[1]
