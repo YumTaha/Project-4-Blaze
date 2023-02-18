@@ -9,7 +9,8 @@ gyro.reset()
 gyro_angle_initial = gyro.angle
 
 #initialize some global variables 
-wheel_diameter_mm = 68.9
+big_wheel_diameter_mm = 68.8
+wheel_diameter_mm = 56
 wheel_circumference_mm = pi * wheel_diameter_mm
 
 #....#####.....######.........#....#....######....######.........######....######....#....#....######....#....#..
@@ -55,7 +56,7 @@ def drive_straight(distance_cm, speed):
         # Get the current angle of the gyro and adjust the motor speeds accordingly
         angle = gyro.angle - gyro_angle_initial
 
-        if abs(angle) > 1:
+        if abs(angle) >= 1:
             if angle > 0:
                 left_speed = speed * 0.9
                 right_speed = speed * 1.1
@@ -123,7 +124,7 @@ def drive_back(distance_cm, speed):
         # Get the current angle of the gyro and adjust the motor speeds accordingly
         angle = gyro.angle - gyro_angle_initial
 
-        if abs(angle) > 1:
+        if abs(angle) >= 1:
             if angle > 0:
                 left_speed = speed * 1.1
                 right_speed = speed * 0.9

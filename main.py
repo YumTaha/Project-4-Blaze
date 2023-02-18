@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
+'''#!/usr/bin/env python3'''
 
 from Movement.sounds import beep
 from Movement.drive import drive_back, drive_straight, turn_degree
 from Movement.error import error
 
 #ALL VARIABLES THAT YOU CAN CHANGE
-distance_cm = 40       # \
+distance_cm = 40    # \
 speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
 laps = 3            # /
 degrees = 180       #/
@@ -38,9 +38,9 @@ def subtask1A():#________________________DO NOT TOUCH___________________________
 def subtask1B():#________________________DO NOT TOUCH_____________________________
     drive_straight(distance_cm, speed)
     for i in range(laps):
-        turn_degree(degrees-1, speed)
-        drive_straight(distance_cm-1, speed)
-    turn_degree(degrees-1, speed)
+        turn_degree(degrees, speed)
+        drive_straight(distance_cm, speed)
+    turn_degree(degrees, speed)
 
 
 if __name__ == "__main__":#________________________REMOVE/ADD THE (#) TO ENABLE/DISABLE A TASK_____________________________
