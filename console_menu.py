@@ -4,14 +4,15 @@ from time import sleep
 from ev3dev2.button import Button
 from ev3dev2.console import Console
 from ev3dev2.led import Leds
-from ev3dev2.sensor import list_sensors, INPUT_1, INPUT_2, INPUT_3, INPUT_4
+from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
 from ev3dev2.sensor.lego import GyroSensor
 from Movement.drive import drive_back, drive_straight, turn_degree
 from Movement.error import error
+from ev3dev2.sound import Sound
 
 
 #ALL VARIABLES THAT YOU CAN CHANGE
-distance_cm = 40    # \
+distance_cm = 100   # \
 speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
 laps = 3            # /
 degrees = 180       #/
@@ -32,7 +33,6 @@ Demonstrates the EV3DEV2 Console(), Led(), and Button() classes.
 
 def instructions():
     console = Console()
-    sleep(1)
     console.reset_console()
     print("Enter:Gyro \nReset")
     print("Up: Task1A")
@@ -157,9 +157,8 @@ if __name__ == "__main__":
     # and use lambda notation to defer the function call
     # i.e. lambda : call(a, b, c)
 
-    print("Hello, \nI'm Blaze")
-
-
+    sound = Sound()
+    sound.speak("Hey, this is Blaze", volume=100)
 
     def reset_sensors():
         """ Reset values of any connected gyro sensor """
@@ -180,7 +179,7 @@ if __name__ == "__main__":
     def subtask1A():#________________________DO NOT TOUCH_____________________________
         sleep(1)
         pos_straight, pos_negative = [], [] #________________________DO NOT TOUCH_____________________________
-
+        sound.speak("Starting Subtask1 A")
         for i in range(laps):
             print("\nLap ", i+1)
 
@@ -205,7 +204,8 @@ if __name__ == "__main__":
 
     def subtask1B():#________________________DO NOT TOUCH_____________________________
         sleep(1)
-
+        sound.speak("Starting Subtask1 B")
+        
         drive_straight(distance_cm, speed)
         for i in range(laps):
             turn_degree(degrees, speed)
@@ -258,5 +258,8 @@ if __name__ == "__main__":
     }
 
     #menu(CHOICES, before_run_function=before, after_run_function=after)
+
     instructions()
     menu(CHOICES, before_run_function=None, after_run_function=None)
+
+    

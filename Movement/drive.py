@@ -1,15 +1,19 @@
 from ev3dev2.motor import OUTPUT_A, OUTPUT_D, LargeMotor
 from ev3dev2.sensor.lego import GyroSensor
-from ev3dev2.sensor import INPUT_2
+from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
 from math import pi
 
-# Reset the gyro to zero
-gyro = GyroSensor(INPUT_2)
-gyro.reset()
-gyro_angle_initial = gyro.angle
+# Search for the gyro and reset it to zero
+for port in [INPUT_1, INPUT_2, INPUT_3, INPUT_4]:
+    try:
+        gyro = GyroSensor(port)
+        gyro.reset()
+        gyro_angle_initial = gyro.angle
+    except:
+        pass
+
 
 #initialize some global variables 
-big_wheel_diameter_mm = 68.8
 wheel_diameter_mm = 56
 wheel_circumference_mm = pi * wheel_diameter_mm
 
@@ -56,7 +60,7 @@ def drive_straight(distance_cm, speed):
         # Get the current angle of the gyro and adjust the motor speeds accordingly
         angle = gyro.angle - gyro_angle_initial
 
-        if abs(angle) >= 1:
+        if abs(angle) > 1:
             if angle > 0:
                 left_speed = speed * 0.9
                 right_speed = speed * 1.1
@@ -124,7 +128,7 @@ def drive_back(distance_cm, speed):
         # Get the current angle of the gyro and adjust the motor speeds accordingly
         angle = gyro.angle - gyro_angle_initial
 
-        if abs(angle) >= 1:
+        if abs(angle) > 1:
             if angle > 0:
                 left_speed = speed * 1.1
                 right_speed = speed * 0.9
@@ -144,6 +148,8 @@ def drive_back(distance_cm, speed):
         if average_rotation_mm >= abs(rotations):
             left_motor.off(brake=True)
             right_motor.off(brake=True)
+            
+            # Exit the while loop
             break
 
     # Return the actual distance traveled in millimeters
