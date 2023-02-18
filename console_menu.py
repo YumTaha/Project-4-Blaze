@@ -6,9 +6,11 @@ from ev3dev2.console import Console
 from ev3dev2.led import Leds
 from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
 from ev3dev2.sensor.lego import GyroSensor
+from ev3dev2.sound import Sound
 from Movement.drive import drive_back, drive_straight, turn_degree
 from Movement.error import error
-from ev3dev2.sound import Sound
+from Movement.sounds import welcome, beep
+
 
 
 #ALL VARIABLES THAT YOU CAN CHANGE
@@ -17,6 +19,12 @@ speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
 laps = 3            # /
 degrees = 180       #/
 
+
+
+'''
+THIS CONSOLE IS ONLY FOR THE FIRST TASK (1a and 1b), EACH FUTURE TASK WILL HAVE A DIFFERENT CONSOLE
+ONLY THE FINAL DEMO THAT WILL HAVE ALL FUNCTIONS INCLUDED
+'''
 
 
 #....#####.....######.........#....#....######....######.........######....######....#....#....######....#....#..
@@ -34,6 +42,8 @@ Demonstrates the EV3DEV2 Console(), Led(), and Button() classes.
 def instructions():
     console = Console()
     console.reset_console()
+
+    #printing menu
     print("Enter:Gyro \nReset")
     print("Up: Task1A")
     print("Down: Task1B")
@@ -157,8 +167,7 @@ if __name__ == "__main__":
     # and use lambda notation to defer the function call
     # i.e. lambda : call(a, b, c)
 
-    sound = Sound()
-    sound.speak("Hey, this is Blaze", volume=100)
+    welcome()
 
     def reset_sensors():
         """ Reset values of any connected gyro sensor """
@@ -177,23 +186,23 @@ if __name__ == "__main__":
 
 
     def subtask1A():#________________________DO NOT TOUCH_____________________________
+        
         sleep(1)
         pos_straight, pos_negative = [], [] #________________________DO NOT TOUCH_____________________________
-        sound.speak("Starting Subtask1 A")
         for i in range(laps):
             print("\nLap ", i+1)
 
             # Drive forward .. cm at ..% speed
-            pos1 = drive_straight(distance_cm, speed) #get the date for the Ys 
-            print("Required forward distance (mm): ", distance_cm*10)
-            print("Traveled distance (mm): {:.1f}".format(pos1))
-            pos_straight.append(pos1)
+            Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys 
+            print("Required forward distance (mm): ", distance_cm * 10)
+            print("Traveled distance (mm): {:.1f}".format(Y_value1))
+            pos_straight.append(Y_value1)
 
             # Drive reverse .. cm at ..% speed
-            pos2 = drive_back(distance_cm, speed) #get the date for the Ys 
-            print("Required return distance (mm): ", -distance_cm*10)
-            print("Return distance (mm): {:.1f}".format(pos2))
-            pos_negative.append(pos2)
+            Y_value2 = drive_back(distance_cm, speed) #get the date for the Ys 
+            print("Required return distance (mm): ", -distance_cm * 10)
+            print("Return distance (mm): {:.1f}".format(Y_value2))
+            pos_negative.append(Y_value2)
 
         #predict final position
         error(laps, pos_straight, pos_negative)
@@ -204,7 +213,6 @@ if __name__ == "__main__":
 
     def subtask1B():#________________________DO NOT TOUCH_____________________________
         sleep(1)
-        sound.speak("Starting Subtask1 B")
         
         drive_straight(distance_cm, speed)
         for i in range(laps):
@@ -213,26 +221,34 @@ if __name__ == "__main__":
         turn_degree(degrees, speed)
         drive_straight(2, speed)
 
-        #Show Menu
         sleep(3)
+
+        #Show Menu
         instructions()
 
     def comingSOON():
         print("coming soon")
-        sleep(1)
+        sleep(2)
+
+        #Show Menu
+        instructions()
+
         # for testing when a function generates an error
-        raise Exception('Raised error')
+        #raise Exception('Raised error')
 
     # Define the functions to be called before and after each run.
     # Functions will be called with the mission_name as the argument.
     # Useful for resetting motor positions between runs, etc.
 
-    '''def before(mission_name):
-        print("before " + mission_name)
-
+    def before(mission_name):
+        sound = Sound()
+        sound.speak("Starting " + mission_name)
+        beep()
+    
     def after(mission_name):
-        print("after " + mission_name)
-        sleep(1)'''
+        sound = Sound()
+        sound.speak(mission_name + " complete")
+        beep()
 
     # Define the buttons, mission names, functions for the console menu.
     # Key is the button assignment: one of "enter", "up", "right", "down", "left"
@@ -250,16 +266,16 @@ if __name__ == "__main__":
     # menu(CHOICES, before_run_function=before, after_run_function=after)
 
     CHOICES = {
-        "up": ("Subtask1A", subtask1A),
+        "up": ("Subtask 1A", subtask1A),
         "right": ("MI2", comingSOON),
         "left": ("MI3", comingSOON),
-        "down": ("Subtask1B", subtask1B),
-        "enter": ("RESET", lambda: reset_sensors())
+        "down": ("Subtask 1B", subtask1B),
+        "enter": ("Reset Gyroscope", reset_sensors)
     }
 
-    #menu(CHOICES, before_run_function=before, after_run_function=after)
+    
 
     instructions()
-    menu(CHOICES, before_run_function=None, after_run_function=None)
+    menu(CHOICES, before_run_function=before, after_run_function=after)
 
     

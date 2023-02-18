@@ -13,7 +13,7 @@ for port in [INPUT_1, INPUT_2, INPUT_3, INPUT_4]:
         pass
 
 
-#initialize some global variables 
+# Initialize some global variables 
 wheel_diameter_mm = 56
 wheel_circumference_mm = pi * wheel_diameter_mm
 

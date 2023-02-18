@@ -1,13 +1,13 @@
 def error(laps, pos_on, pos_back):
     import random
 
-    # position tracker
+    # Position tracker
     x = random.uniform(-1,1)
-    finalY = 0 #initialize the position
+    finalY = 0 # Initialize the position
 
     for i in range(len(pos_on)):
         
-        #add the error to the
+        # Add the error to the
         finalY += pos_on[i] + pos_back[i]
 
 
