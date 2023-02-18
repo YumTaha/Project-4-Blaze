@@ -181,7 +181,6 @@ if __name__ == "__main__":
         
         
         #Show Menu
-        sleep(3)
         instructions()
 
 
@@ -207,8 +206,9 @@ if __name__ == "__main__":
         #predict final position
         error(laps, pos_straight, pos_negative)
         
+        sleep(7)
+
         #Show Menu
-        sleep(10)
         instructions()
 
     def subtask1B():#________________________DO NOT TOUCH_____________________________
