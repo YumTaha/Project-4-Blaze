@@ -14,9 +14,9 @@ from Movement.sounds import welcome, beep
 
 
 #ALL VARIABLES THAT YOU CAN CHANGE
-distance_cm = 100   # \
+distance_cm = 20    # \
 speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
-laps = 3            # /
+laps = 1            # /
 degrees = 180       #/
 
 
@@ -167,7 +167,7 @@ if __name__ == "__main__":
     # and use lambda notation to defer the function call
     # i.e. lambda : call(a, b, c)
 
-    welcome()
+    welcome() # Speak welcome message
 
     def reset_sensors():
         """ Reset values of any connected gyro sensor """
@@ -184,10 +184,11 @@ if __name__ == "__main__":
         instructions()
 
 
-    def subtask1A():#________________________DO NOT TOUCH_____________________________
+    def subtask1A():
         
         sleep(1)
-        pos_straight, pos_negative = [], [] #________________________DO NOT TOUCH_____________________________
+
+        pos_straight, pos_negative = [], [] 
         for i in range(laps):
             print("\nLap ", i+1)
 
@@ -204,24 +205,33 @@ if __name__ == "__main__":
             pos_negative.append(Y_value2)
 
         #predict final position
-        error(laps, pos_straight, pos_negative)
+        error(laps, distance_cm, pos_straight, pos_negative)
         
-        sleep(7)
+        sleep(10)
 
         #Show Menu
         instructions()
 
-    def subtask1B():#________________________DO NOT TOUCH_____________________________
+    def subtask1B():
+        
         sleep(1)
         
-        drive_straight(distance_cm, speed)
+        pos_straight, pos_negative = [], [] 
+
+        Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys 
+        pos_straight.append(Y_value1)
+        
         for i in range(laps):
             turn_degree(degrees, speed)
-            drive_straight(distance_cm, speed)
+            Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys
+            pos_straight.append(Y_value1)
+        
         turn_degree(degrees, speed)
-        drive_straight(2, speed)
 
-        sleep(3)
+        #predict final position
+        #error(laps, distance_cm, pos_straight, pos_negative)
+        
+        sleep(10)
 
         #Show Menu
         instructions()
@@ -242,7 +252,7 @@ if __name__ == "__main__":
 
     def before(mission_name):
         sound = Sound()
-        sound.speak("Starting " + mission_name)
+        sound.speak("starting " + mission_name)
         beep()
     
     def after(mission_name):
@@ -278,4 +288,5 @@ if __name__ == "__main__":
     instructions()
     menu(CHOICES, before_run_function=before, after_run_function=after)
 
+#END OF CODE
     

@@ -31,7 +31,6 @@ def drive_straight(distance_cm, speed):
     :param speed: The speed to travel at, in degrees per second
     :return: The distance the robot actually traveled in millimeters
     """
-
     # Get the global variables
     global gyro_angle_initial
     global wheel_diameter_mm
@@ -167,6 +166,9 @@ def turn_degree(degrees, speed):
     # Global variable to store the initial angle reading from the gyro
     global gyro_angle_initial
 
+    #slowing down the speed
+    speed_turn = int(speed / 4)
+    
     # Set the mode of the gyro sensor to measure rate
     gyro.mode = gyro.modes[1]
 
@@ -181,29 +183,29 @@ def turn_degree(degrees, speed):
     # Determine the direction and speed for each motor
     if degrees > 0:
         # If the turn is to the left, set the left motor speed to negative and the right motor speed to positive
-        left_speed = -speed
-        right_speed = speed
+        left_speed = -speed_turn
+        right_speed = speed_turn
     else:
         # If the turn is to the right, set the left motor speed to positive and the right motor speed to negative
-        left_speed = speed
-        right_speed = -speed
+        left_speed = speed_turn
+        right_speed = -speed_turn
 
     # Loop until the robot has turned the specified number of degrees
     while True:
         # Calculate the current angle of the robot by subtracting the initial angle from the gyro reading
         angle = gyro.angle - gyro_angle_initial
-
+        print(angle)
         # Check if the robot has turned the desired number of degrees
         if abs(angle - degrees) > 1:
             # If not, determine the direction to turn based on the current angle and the target angle
             if angle > degrees:
                 # If the robot has turned too far to the left, adjust the motor speeds to turn to the right
-                left_speed = -speed
-                right_speed = speed
+                left_speed = -speed_turn
+                right_speed = speed_turn
             else:
                 # If the robot has turned too far to the right, adjust the motor speeds to turn to the left
-                left_speed = speed
-                right_speed = -speed
+                left_speed = speed_turn
+                right_speed = -speed_turn
 
             # Set the motor speeds to turn the robot
             left_motor.on(speed=left_speed)
@@ -216,3 +218,4 @@ def turn_degree(degrees, speed):
 
             # Exit the while loop
             break
+    
