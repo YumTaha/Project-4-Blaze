@@ -10,7 +10,8 @@ from ev3dev2.console import Console
 
 
 def main():
-    box()
+    turn_degree(180, 20)
+    turn_degree(180, 20)
 
 
 if __name__ == '__main__':

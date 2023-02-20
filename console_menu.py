@@ -178,6 +178,9 @@ if __name__ == "__main__":
     # i.e. lambda : call(a, b, c)
 
     welcome() # Speak welcome message
+    instructions() # show menu options
+
+
 
     def reset_sensors():
         
@@ -194,18 +197,13 @@ if __name__ == "__main__":
             except:
                 pass
         
-        
-        #Show Menu
-        instructions()
 
 
     def subtask1A():
         
-        reset_console()
-
         sleep(1)
 
-        pos_straight, pos_negative = [], [] 
+
         for i in range(laps):
             print("\nLap ", i+1)
 
@@ -213,29 +211,23 @@ if __name__ == "__main__":
             Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys 
             print("Required forward distance (mm): ", distance_cm * 10)
             print("Traveled distance (mm): {:.1f}".format(Y_value1))
-            pos_straight.append(Y_value1)
+
 
             # Drive reverse .. cm at ..% speed
             Y_value2 = drive_back(distance_cm, speed) #get the date for the Ys 
             print("Required return distance (mm): ", -distance_cm * 10)
             print("Return distance (mm): {:.1f}".format(Y_value2))
-            pos_negative.append(Y_value2)
+
 
     def subtask1B():
         
-        reset_console()
-
         sleep(1)
-        
-        pos_straight, pos_negative = [], [] 
 
         Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys 
-        pos_straight.append(Y_value1)
-        
+
         for i in range(laps):
             turn_degree(degrees, speed)
             Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys
-            pos_straight.append(Y_value1)
         
         turn_degree(degrees, speed)
         
@@ -243,9 +235,6 @@ if __name__ == "__main__":
     def comingSOON():
         print("coming soon")
         sleep(2)
-
-        #Show Menu
-        instructions()
 
         # for testing when a function generates an error
         #raise Exception('Raised error')

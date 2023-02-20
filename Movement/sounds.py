@@ -6,4 +6,4 @@ def beep():
 
 def welcome():
     sound = Sound()
-    sound.speak("Hey, this is Blaze", volume=100)
+    #sound.speak("Hey, this is Blaze the stupid GIRL", volume=100)
