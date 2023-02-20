@@ -13,9 +13,9 @@ from Movement.sounds import welcome, beep
 
 
 #ALL VARIABLES THAT YOU CAN CHANGE
-distance_cm = 20    # \
+distance_cm = 90    # \
 speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
-laps = 1            # /
+laps = 4            # /
 degrees = 180       #/
 
 
@@ -218,26 +218,22 @@ if __name__ == "__main__":
             print("Required return distance (mm): ", -distance_cm * 10)
             print("Return distance (mm): {:.1f}".format(Y_value2))
 
-
     def subtask1B():
         
         sleep(1)
 
-        Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys 
+        drive_straight(distance_cm + 30, speed) #get the date for the Ys 
 
-        for i in range(laps):
+        for i in range(laps - 1):
             turn_degree(degrees, speed)
-            Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys
+            drive_straight(distance_cm + 30, speed) #get the date for the Ys
         
         turn_degree(degrees, speed)
         
-
     def comingSOON():
         print("coming soon")
         sleep(2)
 
-        # for testing when a function generates an error
-        #raise Exception('Raised error')
 
     # Define the functions to be called before and after each run.
     # Functions will be called with the mission_name as the argument.
