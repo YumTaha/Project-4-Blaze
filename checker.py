@@ -1,12 +1,16 @@
 #!/usr/bin/env python3
 
-from Movement.color_reader import read_barcode
-from Movement.drive import drive_straight
+from Movement.reader import read_barcode, read_black, box
+from time import sleep
+from ev3dev2.sound import Sound
+from Movement.drive import turn_degree
+from ev3dev2.console import Console
+
+'''THIS IS WHERE I CHECK THE VURNABILITY OF EACH FUNCTION AND HOW WELL THEY WORK'''
+
 
 def main():
-    #barcode = read_barcode()
-    #print(barcode)
-    drive_straight(40, 20)
+    box()
 
 
 if __name__ == '__main__':

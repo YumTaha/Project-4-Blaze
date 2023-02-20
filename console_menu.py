@@ -8,7 +8,6 @@ from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
 from ev3dev2.sensor.lego import GyroSensor
 from ev3dev2.sound import Sound
 from Movement.drive import drive_back, drive_straight, turn_degree
-from Movement.error import error
 from Movement.sounds import welcome, beep
 
 
@@ -26,6 +25,27 @@ THIS CONSOLE IS ONLY FOR THE FIRST TASK (1a and 1b), EACH FUTURE TASK WILL HAVE 
 ONLY THE FINAL DEMO THAT WILL HAVE ALL FUNCTIONS INCLUDED
 '''
 
+# Function to reset console
+def reset_console():
+    console = Console()
+    console.reset_console()
+    print("")  # add a blank line for spacing
+
+# Function to calibrate angle measurements
+def calibrator(degrees):
+    adjustments = {360: 350, -360: -350, 180: 175, -180: -175, 90: 87.5, -90: -87.5} # Dictionary of adjustments for each degree (Robot is not perfect)
+    return adjustments.get(degrees, degrees) # Return the calibrated degree, or the original degree if no calibration is necessary
+
+# Main function for printing instructions
+def instructions():
+    console = Console()
+    console.reset_console()
+
+    # Printing menu options
+    print("Enter:Gyro \nReset")
+    print("Up: Task1A")
+    print("Down: Task1B")
+
 
 #....#####.....######.........#....#....######....######.........######....######....#....#....######....#....#..
 #....#....#....#....#.........##...#....#....#......##.............##......#....#....#....#....#.........#....#..
@@ -38,16 +58,6 @@ Used to create a console menu for switching between programs quickly
 without having to return to Brickman to find and launch a program.
 Demonstrates the EV3DEV2 Console(), Led(), and Button() classes.
 """
-
-def instructions():
-    console = Console()
-    console.reset_console()
-
-    #printing menu
-    print("Enter:Gyro \nReset")
-    print("Up: Task1A")
-    print("Down: Task1B")
-    sleep(2)
 
 
 def get_positions(console):
@@ -170,12 +180,17 @@ if __name__ == "__main__":
     welcome() # Speak welcome message
 
     def reset_sensors():
+        
+        console = Console()
+        console.reset_console()
+        
         """ Reset values of any connected gyro sensor """
         for port in [INPUT_1, INPUT_2, INPUT_3, INPUT_4]:
             try:
                 sensor = GyroSensor(port)
                 sensor.reset()
                 print("Gyro reset".format(port))
+                sleep(1)
             except:
                 pass
         
@@ -186,6 +201,8 @@ if __name__ == "__main__":
 
     def subtask1A():
         
+        reset_console()
+
         sleep(1)
 
         pos_straight, pos_negative = [], [] 
@@ -204,16 +221,10 @@ if __name__ == "__main__":
             print("Return distance (mm): {:.1f}".format(Y_value2))
             pos_negative.append(Y_value2)
 
-        #predict final position
-        error(laps, distance_cm, pos_straight, pos_negative)
-        
-        sleep(10)
-
-        #Show Menu
-        instructions()
-
     def subtask1B():
         
+        reset_console()
+
         sleep(1)
         
         pos_straight, pos_negative = [], [] 
@@ -227,14 +238,7 @@ if __name__ == "__main__":
             pos_straight.append(Y_value1)
         
         turn_degree(degrees, speed)
-
-        #predict final position
-        #error(laps, distance_cm, pos_straight, pos_negative)
         
-        sleep(10)
-
-        #Show Menu
-        instructions()
 
     def comingSOON():
         print("coming soon")
@@ -254,11 +258,13 @@ if __name__ == "__main__":
         sound = Sound()
         sound.speak("starting " + mission_name)
         beep()
+        reset_console()
     
     def after(mission_name):
         sound = Sound()
         sound.speak(mission_name + " complete")
         beep()
+        instructions()
 
     # Define the buttons, mission names, functions for the console menu.
     # Key is the button assignment: one of "enter", "up", "right", "down", "left"

@@ -1,14 +1,15 @@
-def error(laps, distance, pos_on, pos_back):
+def error(laps, distance, pos_on=[], pos_back=[]):
     import random
 
     # Position tracker
     x = random.uniform(-1,1)
     finalY = 0 # Initialize the position
 
+    # Initialize pos_on and pos_back as empty lists if not provided
     if len(pos_on) == 0:
-        pos_on = [0] * len(pos_back)
+        pos_on = []
     if len(pos_back) == 0:
-        pos_back = [0] * len(pos_on)
+        pos_back = []
 
     for i in range(len(pos_on)):
 
@@ -19,29 +20,8 @@ def error(laps, distance, pos_on, pos_back):
             pos_back[i] = -distance
 
         # Add the error to the position
-        finalY += pos_on[i] + pos_back[i]
+        finalY += pos_on[i] - pos_back[i]
 
     # Print the final position
     print("\n\nFinal position: x = {:.2f} cm, y = {:.2f} cm".format(x, (finalY / 10)))
     print("Number of turns: {}".format(laps * 2))
-
-'''
-def calibrator(degrees):
-
-    # Calibrate the degrees
-    if degrees == 360:
-        degrees = 355
-    elif degrees == -360:
-        degrees = -355
-    elif degrees == 180:
-        degrees = 177.5
-    elif degrees == -180:
-        degrees = -177.5
-    elif degrees == 90:
-        degrees = 88.75
-    elif degrees == -90:
-        degrees = -88.75
-    else:
-        pass
-    return degrees
-'''

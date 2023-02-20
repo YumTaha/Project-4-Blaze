@@ -152,7 +152,7 @@ def drive_back(distance_cm, speed):
             break
 
     # Return the actual distance traveled in millimeters
-    return (left_motor.rotations) * (pi * wheel_diameter_mm)
+    return -(left_motor.rotations) * (pi * wheel_diameter_mm)
     
 
 #....#####.....######.........#....#....######....######.........######....######....#....#....######....#....#..
@@ -166,9 +166,9 @@ def turn_degree(degrees, speed):
     # Global variable to store the initial angle reading from the gyro
     global gyro_angle_initial
 
-    #slowing down the speed
+    # Slowing down the speed
     speed_turn = int(speed / 4)
-    
+
     # Set the mode of the gyro sensor to measure rate
     gyro.mode = gyro.modes[1]
 
@@ -194,7 +194,7 @@ def turn_degree(degrees, speed):
     while True:
         # Calculate the current angle of the robot by subtracting the initial angle from the gyro reading
         angle = gyro.angle - gyro_angle_initial
-        print(angle)
+
         # Check if the robot has turned the desired number of degrees
         if abs(angle - degrees) > 1:
             # If not, determine the direction to turn based on the current angle and the target angle
@@ -218,4 +218,3 @@ def turn_degree(degrees, speed):
 
             # Exit the while loop
             break
-    
