@@ -230,8 +230,10 @@ if __name__ == "__main__":
         
         turn_degree(degrees, speed)
         
-    def comingSOON():
-        print("coming soon")
+    def testing():
+        inch = 84
+        cm = inch * 2.54
+        drive_straight(cm, 20)
         sleep(2)
 
 
@@ -268,8 +270,8 @@ if __name__ == "__main__":
 
     CHOICES = {
         "up": ("Subtask 1A", subtask1A),
-        "right": ("MI2", comingSOON),
-        "left": ("MI3", comingSOON),
+        "right": ("MI2", testing),
+        "left": ("MI3", testing),
         "down": ("Subtask 1B", subtask1B),
         "enter": ("Reset Gyroscope", reset_sensors)
     }
