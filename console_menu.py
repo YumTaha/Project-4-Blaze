@@ -16,7 +16,7 @@ from Movement.sounds import welcome, beep
 distance_cm = 10    # \
 speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
 laps = 4            # /
-degrees = 180       #/
+degrees = 90       #/
 
 
 
@@ -31,10 +31,6 @@ def reset_console():
     console.reset_console()
     print("")  # add a blank line for spacing
 
-# Function to calibrate angle measurements
-def calibrator(degrees):
-    adjustments = {360: 350, -360: -350, 180: 175, -180: -175, 90: 90, -90: -87.5} # Dictionary of adjustments for each degree (Robot is not perfect)
-    return adjustments.get(degrees, degrees) # Return the calibrated degree, or the original degree if no calibration is necessary
 
 # Main function for printing instructions
 def instructions():
@@ -233,10 +229,10 @@ if __name__ == "__main__":
     def testing():
         inch = 12
         cm = inch * 2.54
-        einch = 48
+        einch = 96
         ecm = einch * 2.54
         drive(cm, speed, direction='forward')
-        turn_degree(90, speed, direction='right')
+        turn_degree(degrees, speed, direction='right')
         drive(ecm, speed, direction='forward')
         sleep(2)
 

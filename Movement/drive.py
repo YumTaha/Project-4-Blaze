@@ -12,6 +12,10 @@ for port in [INPUT_1, INPUT_2, INPUT_3, INPUT_4]:
     except:
         pass
 
+# Function to calibrate angle measurements
+def calibrator(degrees):
+    adjustments = {360: 350, 180: 175, 90: 86.5} # Dictionary of adjustments for each degree (Robot is not perfect)
+    return adjustments.get(degrees, degrees) # Return the calibrated degree, or the original degree if no calibration is necessary
 
 # Initialize some global variables 
 wheel_diameter_mm = 56
@@ -107,6 +111,11 @@ def turn_degree(degrees, speed, direction='right'):
     # Slowing down the speed
     speed_turn = int(speed / 4)
 
+
+    #calibrating the degrees
+    result  = calibrator(degrees)
+    print(result)
+
     # Set the mode of the gyro sensor to measure rate
     gyro.mode = gyro.modes[1]
 
@@ -118,7 +127,7 @@ def turn_degree(degrees, speed, direction='right'):
     right_motor.reset()
 
     # Determine the direction and speed for each motor
-    if degrees > 0:
+    if result > 0:
         # If the turn is to the left, set the left motor speed to negative and the right motor speed to positive
         if direction == 'right':
             left_speed = speed_turn
@@ -133,9 +142,9 @@ def turn_degree(degrees, speed, direction='right'):
         angle = gyro.angle - gyro_angle_initial
 
         # Check if the robot has turned the desired number of degrees
-        if abs(angle - degrees) > 1:
+        if abs(angle - result) > 1:
             # If not, determine the direction to turn based on the current angle and the target angle
-            if angle > degrees:
+            if angle > result:
                 # If the robot has turned too far, adjust the motor speeds to turn in the opposite direction
                 left_speed = -speed_turn if direction == 'right' else speed_turn
                 right_speed = speed_turn if direction == 'right' else -speed_turn
