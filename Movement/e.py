@@ -23,31 +23,24 @@ wheel_circumference_mm = pi * wheel_diameter_mm
 #....#....#....#....#.........#..#.#....#....#......##.............##......#....#....#....#....#.........#....#..
 #....#####.....######.........#...##....######......##.............##......######....######....######....#....#..
 
-def drive(distance_cm, speed, direction='forward'):
 
+def drive_straight(distance_cm, speed):
     """
     Make the robot drive straight for a certain distance at a given speed.
     :param distance_cm: The distance to travel in centimeters
     :param speed: The speed to travel at, in degrees per second
-    :param direction: The direction to drive in, either 'forward' or 'backward'
     :return: The distance the robot actually traveled in millimeters
     """
     # Get the global variables
     global gyro_angle_initial
     global wheel_diameter_mm
     global wheel_circumference_mm
-    gyro = GyroSensor(INPUT_1)
-    gyro.reset()
+
     # Convert the target distance from centimeters to millimeters
     target_distance_mm = distance_cm * 10
 
     # Calculate the number of wheel rotations needed to travel the target distance
-    if direction == 'forward':
-        rotations = target_distance_mm / wheel_circumference_mm
-    elif direction == 'backward':
-        rotations = -target_distance_mm / wheel_circumference_mm
-    else:
-        raise ValueError("Invalid direction. Must be either 'forward' or 'backward'")
+    rotations = target_distance_mm / wheel_circumference_mm
 
     # Get references to the left and right motors
     left_motor = LargeMotor(OUTPUT_A)
@@ -60,7 +53,7 @@ def drive(distance_cm, speed, direction='forward'):
     # Initialize the left and right motor speeds to be the same
     left_speed = speed
     right_speed = speed
-
+    
     # Loop until the robot has traveled the target distance
     while True:
         # Get the current angle of the gyro and adjust the motor speeds accordingly
@@ -68,31 +61,28 @@ def drive(distance_cm, speed, direction='forward'):
 
         if abs(angle) > 1:
             if angle > 0:
-                left_speed = speed * 0.9 if direction == 'forward' else speed * 1.1
-                right_speed = speed * 1.1 if direction == 'forward' else speed * 0.9
+                left_speed = speed * 0.9
+                right_speed = speed * 1.1
             else:
-                left_speed = speed * 1.1 if direction == 'forward' else speed * 0.9
-                right_speed = speed * 0.9 if direction == 'forward' else speed * 1.1
+                left_speed = speed * 1.1
+                right_speed = speed * 0.9
         else:
             left_speed = speed
             right_speed = speed
 
-        # Move the robot forward or backward using both motors at the adjusted speeds
+        # Move the robot forward using both motors at the adjusted speeds
         left_motor.on_for_rotations(left_speed, rotations, block=False)
         right_motor.on_for_rotations(right_speed, rotations, block=False)
 
         # Check if the robot has traveled the target distance and stop the motors if it has
         average_rotation_mm = (left_motor.rotations + right_motor.rotations) / 2
-        if abs(average_rotation_mm) >= abs(rotations):
+        if average_rotation_mm >= rotations:
             left_motor.off(brake=True)
             right_motor.off(brake=True)
-
-            # Exit the while loop
             break
 
     # Return the actual distance traveled in millimeters
-    return (left_motor.rotations * pi * wheel_diameter_mm) if direction == 'forward' else (-left_motor.rotations * pi * wheel_diameter_mm)
-
+    return (left_motor.rotations) * (pi * wheel_diameter_mm)
 
 #....#####.....######.........#....#....######....######.........######....######....#....#....######....#....#..
 #....#....#....#....#.........##...#....#....#......##.............##......#....#....#....#....#.........#....#..
@@ -100,7 +90,80 @@ def drive(distance_cm, speed, direction='forward'):
 #....#....#....#....#.........#..#.#....#....#......##.............##......#....#....#....#....#.........#....#..
 #....#####.....######.........#...##....######......##.............##......######....######....######....#....#..
 
-def turn_degree(degrees, speed, direction='right'):
+
+def drive_back(distance_cm, speed):
+    """
+    Make the robot drive straight backward for a certain distance at a given speed.
+    :param distance_cm: The distance to travel in centimeters
+    :param speed: The speed to travel at, in degrees per second
+    :return: The distance the robot actually traveled in millimeters
+    """
+
+    # Get the global variables
+    global gyro_angle_initial
+    global wheel_diameter_mm
+    global wheel_circumference_mm
+
+    # Convert the target distance from centimeters to millimeters
+    target_distance_mm = distance_cm * 10
+
+    # Calculate the number of wheel rotations needed to travel the target distance
+    rotations = -target_distance_mm / wheel_circumference_mm
+
+    # Get references to the left and right motors
+    left_motor = LargeMotor(OUTPUT_A)
+    right_motor = LargeMotor(OUTPUT_D)
+
+    # Reset the motor positions
+    left_motor.reset()
+    right_motor.reset()
+
+    # Initialize the left and right motor speeds to be the same
+    left_speed = speed
+    right_speed = speed
+    
+    # Loop until the robot has traveled the target distance
+    while True:
+        # Get the current angle of the gyro and adjust the motor speeds accordingly
+        angle = gyro.angle - gyro_angle_initial
+
+        if abs(angle) > 1:
+            if angle > 0:
+                left_speed = speed * 1.1
+                right_speed = speed * 0.9
+            else:
+                left_speed = speed * 0.9
+                right_speed = speed * 1.1
+
+        else:
+            left_speed = speed
+            right_speed = speed
+
+        # Move the robot forward using both motors at the adjusted speeds
+        left_motor.on_for_rotations(left_speed, rotations, block=False)
+        right_motor.on_for_rotations(right_speed, rotations, block=False)
+
+        # Check if the robot has traveled the target distance and stop the motors if it has
+        average_rotation_mm = abs(left_motor.rotations + right_motor.rotations) / 2
+        if average_rotation_mm >= abs(rotations):
+            left_motor.off(brake=True)
+            right_motor.off(brake=True)
+            
+            # Exit the while loop
+            break
+
+    # Return the actual distance traveled in millimeters
+    return -(left_motor.rotations) * (pi * wheel_diameter_mm)
+    
+
+#....#####.....######.........#....#....######....######.........######....######....#....#....######....#....#..
+#....#....#....#....#.........##...#....#....#......##.............##......#....#....#....#....#.........#....#..
+#....#....#....#....#.........#.#..#....#....#......##.............##......#....#....#....#....#.........######..
+#....#....#....#....#.........#..#.#....#....#......##.............##......#....#....#....#....#.........#....#..
+#....#####.....######.........#...##....######......##.............##......######....######....######....#....#..
+
+
+def turn_degree(degrees, speed):
     # Global variable to store the initial angle reading from the gyro
     global gyro_angle_initial
 
@@ -111,7 +174,8 @@ def turn_degree(degrees, speed, direction='right'):
     gyro.mode = gyro.modes[1]
 
     # Create instances of the left and right motors
-    left_motor, right_motor = LargeMotor(OUTPUT_A), LargeMotor(OUTPUT_D)
+    left_motor = LargeMotor(OUTPUT_A)
+    right_motor = LargeMotor(OUTPUT_D)
 
     # Reset the motor tachometers to 0
     left_motor.reset()
@@ -120,12 +184,12 @@ def turn_degree(degrees, speed, direction='right'):
     # Determine the direction and speed for each motor
     if degrees > 0:
         # If the turn is to the left, set the left motor speed to negative and the right motor speed to positive
-        if direction == 'right':
-            left_speed = speed_turn
-            right_speed = -speed_turn
-        elif direction == 'left':
-            left_speed = -speed_turn
-            right_speed = speed_turn
+        left_speed = -speed_turn
+        right_speed = speed_turn
+    else:
+        # If the turn is to the right, set the left motor speed to positive and the right motor speed to negative
+        left_speed = speed_turn
+        right_speed = -speed_turn
 
     # Loop until the robot has turned the specified number of degrees
     while True:
@@ -136,13 +200,13 @@ def turn_degree(degrees, speed, direction='right'):
         if abs(angle - degrees) > 1:
             # If not, determine the direction to turn based on the current angle and the target angle
             if angle > degrees:
-                # If the robot has turned too far, adjust the motor speeds to turn in the opposite direction
-                left_speed = -speed_turn if direction == 'right' else speed_turn
-                right_speed = speed_turn if direction == 'right' else -speed_turn
+                # If the robot has turned too far to the left, adjust the motor speeds to turn to the right
+                left_speed = -speed_turn
+                right_speed = speed_turn
             else:
-                # If the robot has turned too far, adjust the motor speeds to turn in the opposite direction
-                left_speed = speed_turn if direction == 'right' else -speed_turn
-                right_speed = -speed_turn if direction == 'right' else speed_turn
+                # If the robot has turned too far to the right, adjust the motor speeds to turn to the left
+                left_speed = speed_turn
+                right_speed = -speed_turn
 
             # Set the motor speeds to turn the robot
             left_motor.on(speed=left_speed)

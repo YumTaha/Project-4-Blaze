@@ -7,13 +7,13 @@ from ev3dev2.led import Leds
 from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3, INPUT_4
 from ev3dev2.sensor.lego import GyroSensor
 from ev3dev2.sound import Sound
-from Movement.drive import drive_back, drive_straight, turn_degree
+from Movement.drive import drive, turn_degree
 from Movement.sounds import welcome, beep
 
 
 
 #ALL VARIABLES THAT YOU CAN CHANGE
-distance_cm = 90    # \
+distance_cm = 10    # \
 speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
 laps = 4            # /
 degrees = 180       #/
@@ -33,7 +33,7 @@ def reset_console():
 
 # Function to calibrate angle measurements
 def calibrator(degrees):
-    adjustments = {360: 350, -360: -350, 180: 175, -180: -175, 90: 87.5, -90: -87.5} # Dictionary of adjustments for each degree (Robot is not perfect)
+    adjustments = {360: 350, -360: -350, 180: 175, -180: -175, 90: 90, -90: -87.5} # Dictionary of adjustments for each degree (Robot is not perfect)
     return adjustments.get(degrees, degrees) # Return the calibrated degree, or the original degree if no calibration is necessary
 
 # Main function for printing instructions
@@ -208,13 +208,13 @@ if __name__ == "__main__":
             print("\nLap ", i+1)
 
             # Drive forward .. cm at ..% speed
-            Y_value1 = drive_straight(distance_cm, speed) #get the date for the Ys 
+            Y_value1 = drive(distance_cm, speed, direction='forward') #get the date for the Ys 
             print("Required forward distance (mm): ", distance_cm * 10)
             print("Traveled distance (mm): {:.1f}".format(Y_value1))
 
 
             # Drive reverse .. cm at ..% speed
-            Y_value2 = drive_back(distance_cm, speed) #get the date for the Ys 
+            Y_value2 = drive(distance_cm, speed, direction='backward') #get the date for the Ys 
             print("Required return distance (mm): ", -distance_cm * 10)
             print("Return distance (mm): {:.1f}".format(Y_value2))
 
@@ -222,18 +222,22 @@ if __name__ == "__main__":
         
         sleep(1)
 
-        drive_straight(distance_cm + 30, speed) #get the date for the Ys 
+        drive(distance_cm + 30, speed, direction='forward') #get the date for the Ys 
 
         for i in range(laps - 1):
             turn_degree(degrees, speed)
-            drive_straight(distance_cm + 30, speed) #get the date for the Ys
+            drive(distance_cm + 30, speed, direction='backward') #get the date for the Ys
         
         turn_degree(degrees, speed)
         
     def testing():
-        inch = 84
+        inch = 12
         cm = inch * 2.54
-        drive_straight(cm, 20)
+        einch = 48
+        ecm = einch * 2.54
+        drive(cm, speed, direction='forward')
+        turn_degree(90, speed, direction='right')
+        drive(ecm, speed, direction='forward')
         sleep(2)
 
 
