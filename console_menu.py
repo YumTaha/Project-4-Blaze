@@ -12,10 +12,10 @@ from Movement.sounds import welcome, beep
 
 
 
-#ALL VARIABLES THAT YOU CAN CHANGE
-distance_cm = 10    # \
-speed = 20          #  |=> YOU CAN CHANGE THESE VARIABLES
-laps = 4            # /
+#ALL VARIABLES THAT YOU CAN CHANGE/ADD/DELETE
+distance_cm = 10   # \
+speed = 20         #  |=> YOU CAN CHANGE THESE VARIABLES
+laps = 4           # /
 degrees = 90       #/
 
 
@@ -39,8 +39,8 @@ def instructions():
 
     # Printing menu options
     print("Enter:Gyro \nReset")
-    print("Up: Task1A")
-    print("Down: Task1B")
+    print("Up: Test1")
+    print("Down: Test2")
 
 
 #....#####.....######.........#....#....######....######.........######....######....#....#....######....#....#..
@@ -193,48 +193,31 @@ if __name__ == "__main__":
             except:
                 pass
         
+                
+    def comingsoon():
+        pass
 
 
-    def subtask1A():
-        
-        sleep(1)
-
-
-        for i in range(laps):
-            print("\nLap ", i+1)
-
-            # Drive forward .. cm at ..% speed
-            Y_value1 = drive(distance_cm, speed, direction='forward') #get the date for the Ys 
-            print("Required forward distance (mm): ", distance_cm * 10)
-            print("Traveled distance (mm): {:.1f}".format(Y_value1))
-
-
-            # Drive reverse .. cm at ..% speed
-            Y_value2 = drive(distance_cm, speed, direction='backward') #get the date for the Ys 
-            print("Required return distance (mm): ", -distance_cm * 10)
-            print("Return distance (mm): {:.1f}".format(Y_value2))
-
-    def subtask1B():
-        
-        sleep(1)
-
-        drive(distance_cm + 30, speed, direction='forward') #get the date for the Ys 
-
-        for i in range(laps - 1):
-            turn_degree(degrees, speed)
-            drive(distance_cm + 30, speed, direction='backward') #get the date for the Ys
-        
-        turn_degree(degrees, speed)
-        
     def testing():
-        inch = 12
-        cm = inch * 2.54
-        einch = 96
-        ecm = einch * 2.54
+
+        inch = 12 # The initial 12 inch the robot should move tp
+        cm = inch * 2.54 # Converted to cm
+        einch = 96 # The distance that varies between each test
+        ecm = einch * 2.54 # Converted to cm
+
+        # The movement
         drive(cm, speed, direction='forward')
         turn_degree(degrees, speed, direction='right')
         drive(ecm, speed, direction='forward')
-        sleep(2)
+
+
+    def testing2():
+
+        inch = 12 # The distance that varies between each test
+        cm = inch * 2.54 # Converted to cm
+
+        # The movement
+        drive(cm, speed, direction='forward')
 
 
     # Define the functions to be called before and after each run.
@@ -269,10 +252,10 @@ if __name__ == "__main__":
     # menu(CHOICES, before_run_function=before, after_run_function=after)
 
     CHOICES = {
-        "up": ("Subtask 1A", subtask1A),
-        "right": ("MI2", testing),
-        "left": ("MI3", testing),
-        "down": ("Subtask 1B", subtask1B),
+        "up": ("test1", testing),
+        "right": ("MI2", comingsoon),
+        "left": ("MI3", comingsoon),
+        "down": ("test2", testing2),
         "enter": ("Reset Gyroscope", reset_sensors)
     }
 
