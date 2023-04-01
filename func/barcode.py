@@ -1,42 +1,12 @@
 from ev3dev2.motor import MediumMotor, OUTPUT_B
 from ev3dev2.sensor.lego import ColorSensor
-from Mov.drive import slowly_approach
+from func.drive import slowly_approach
 from time import sleep as wait
 
 BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
 
-
-# def read_barcode():
-
-#     medium_motor = MediumMotor(OUTPUT_B)
-#     color_sensor = ColorSensor()
-
-#     medium_motor.duty_cycle_sp = 100
-#     medium_motor.speed_sp = -23
-
-#     medium_motor.run_forever()
-
-#     barcode = []
-#     wait(2)
-#     while len(barcode) < 4:
-#         wait(1.35)
-
-#         color = color_sensor.color
-
-#         if color == ColorSensor.COLOR_BLACK:
-#             # Append 1 to the barcode list for black
-#             # print("black")
-#             barcode.append(1)
-#         elif color == ColorSensor.COLOR_WHITE:
-#             # Append 0 to the barcode list for white
-#             # print("white")
-#             barcode.append(0)
-
-#     medium_motor.stop()
-
-#     return barcode
-
 # AROUND 5 AND 6 INCHES BETWEEN CENTER OF THE WHEEL TO THE BARCODE (5.5)
+# ULTRASONIC AROUND 3.0 INCHES
 
 # this function returns bool
 def lift_and_scan(type_of_box):

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 
-from Mov.drive import drive_forward
-from Mov.turn import turn
-from Mov.barcode import lift_and_scan, scan_barcode
-from Mov.lift import lift_object
-from time import sleep
+from func.drive import *
+from func.turn import *
+from func.barcode import *
+from func.lift import *
 
 BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
 

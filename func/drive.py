@@ -1,6 +1,6 @@
 import ev3dev2.motor as motor
 import ev3dev2.sensor.lego as sensor
-from Mov.lift import lift_object
+from func.lift import lift_object
 
 LEFT_WHEEL_PORT = 'outA'
 RIGHT_WHEEL_PORT = 'outD'
