@@ -3,7 +3,8 @@ from ev3dev2.sensor.lego import ColorSensor
 from func.drive import slowly_approach
 from time import sleep as wait
 
-BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
+# BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
+BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [1, 0, 1, 0], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
 
 # AROUND 5 AND 6 INCHES BETWEEN CENTER OF THE WHEEL TO THE BARCODE (5.5)
 # ULTRASONIC AROUND 3.0 INCHES
@@ -73,20 +74,20 @@ def lift_and_scan(type_of_box):
         barcode = []
 
 def scan_barcode(type_of_box):
-    box_type = []
 
     col_sensor = ColorSensor()
     motor = MediumMotor()
 
-    motor.on_for_degrees(10, 10)
+    motor.on_for_degrees(10, 7)
     motor.off()
     wait(1)
     motor.position = 0
 
-    motor.on_for_degrees(-10, 56.32)
+    motor.on_for_degrees(-10, 56.4)
 
     while True:
         # print(col_sensor.color)
+        box_type = []
         if col_sensor.color == 1: box_type.append(1)
         if col_sensor.color == 6: box_type.append(0)
         print(box_type)
@@ -95,7 +96,7 @@ def scan_barcode(type_of_box):
         wait(2)
         for i in range(3):
             wait(1)
-            motor.on_for_degrees(-10, 13.28)  # move the motor upward by 0.5 inches
+            motor.on_for_degrees(-10, 13.25)  # move the motor upward by 0.5 inches
             wait(1)
             if col_sensor.color == 1: box_type.append(1)
             if col_sensor.color == 6: box_type.append(0)
@@ -107,7 +108,14 @@ def scan_barcode(type_of_box):
 
         # Check if the scanned barcode matches any of the predefined barcode combinations
         if box_type == BOXTYPE['BoxType 1'] or box_type == BOXTYPE['BoxType 2'] or box_type == BOXTYPE['BoxType 3'] or box_type == BOXTYPE['BoxType 4']:
-            if box_type == type_of_box: return True
+            if box_type == type_of_box: 
+                wait(2)
+                print('Lifting the box...')
+                wait(.5)
+                motor.on_for_degrees(10, 13.05 * 3 + 55) # Coming down to the right level to pickup the box
+                wait(1)
+                slowly_approach()
+                return True
             else: return False
 
         wait(3)
@@ -135,6 +143,8 @@ def scan_barcode(type_of_box):
         print('reversed ', box_type)
         # Check if the scanned barcode matches any of the predefined barcode combinations
         if box_type == BOXTYPE['BoxType 1'] or box_type == BOXTYPE['BoxType 2'] or box_type == BOXTYPE['BoxType 3'] or box_type == BOXTYPE['BoxType 4']:
-            if box_type == type_of_box: return True
+            if box_type == type_of_box: 
+                slowly_approach()
+                return True
             else: return False
         

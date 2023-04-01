@@ -1,12 +1,12 @@
 import ev3dev2.motor as motor
 import ev3dev2.sensor.lego as sensor
 from func.lift import lift_object
-
+from time import sleep as wait
 LEFT_WHEEL_PORT = 'outA'
 RIGHT_WHEEL_PORT = 'outD'
 GYRO_PORT = 'in1'
 ULTRASONIC_PORT = 'in3'
-DISTANCE_OF_APPROACH_CM = 3
+DISTANCE_OF_APPROACH_CM = 2.5
 
 left_motor = motor.LargeMotor(LEFT_WHEEL_PORT)
 right_motor = motor.LargeMotor(RIGHT_WHEEL_PORT)
@@ -31,7 +31,7 @@ def drive_forward(distance_in_cm):
         left_motor.speed_sp = speed_in_deg_per_sec + correction_factor
         right_motor.speed_sp = speed_in_deg_per_sec - correction_factor
 
-        if ultrasonic_sensor.distance_inches <= 3.3:
+        if ultrasonic_sensor.distance_inches <= 2.5:
             left_motor.off(brake=True)
             right_motor.off(brake=True)
             break
@@ -40,7 +40,6 @@ def drive_forward(distance_in_cm):
     print('Distance need to traveled:', distance_in_cm)
     print('Actual distance traveled:', actual_distance)
     print('The obstacle is ', ultrasonic_sensor.distance_inches, ' inches forward.')
-
 
 def slowly_approach():
     gyro_sensor.reset()
@@ -60,14 +59,15 @@ def slowly_approach():
         left_motor.speed_sp = speed_in_deg_per_sec + correction_factor
         right_motor.speed_sp = speed_in_deg_per_sec - correction_factor
 
-        if ultrasonic_sensor.distance_centimeters <= .5:
+        if ultrasonic_sensor.distance_centimeters <= .2:
                     left_motor.off(brake=True)
                     right_motor.off(brake=True)
                     break
     
-    actual_distance = (left_motor.position + right_motor.position) / 2 / 360 * (2 * 3.14 * 2.8)
+    actual_distance = (left_motor.position + right_motor.position) / 2 / 360 * (2 * 3.14 * 2.8) * 39.37
 
     print('Imaginary approach distance:', DISTANCE_OF_APPROACH_CM)
     print('Actual approach distance:', actual_distance)
-
+    
+    wait(2)
     lift_object()

@@ -5,7 +5,8 @@ from func.turn import *
 from func.barcode import *
 from func.lift import *
 
-BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
+# BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
+BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [1, 0, 1, 0], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
 
 
 def main():
@@ -15,9 +16,9 @@ def main():
     # print(barcode)
     # lift_and_scan(BOXTYPE['BoxType 1'])
     # lift_object()
-    # barcode = scan_barcode(BOXTYPE['BoxType 2'])
+    barcode = scan_barcode(BOXTYPE['BoxType 2'])
 
-    # print('This barcode is the right one? ', barcode)
+    print('This barcode is the right one? ', barcode)
     pass
     
 

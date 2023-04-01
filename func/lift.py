@@ -7,4 +7,4 @@ LIFT_MOTOR_DEGREE = 90
 lift_motor = MediumMotor(LIFT_MOTOR_PORT)
 
 def lift_object():
-    lift_motor.on_for_degrees(LIFT_MOTOR_POWER, LIFT_MOTOR_DEGREE)  # lift object for 360 degrees (one full rotation) at -50 power
+    lift_motor.on_for_degrees(LIFT_MOTOR_POWER, LIFT_MOTOR_DEGREE)
