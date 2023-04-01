@@ -1,75 +1,64 @@
-from ev3dev2.sensor.lego import ColorSensor, TouchSensor
-from time import sleep
+from ev3dev2.sensor.lego import ColorSensor
+from ev3dev2.motor import MediumMotor, OUTPUT_B
+from time import time
+from Movement.errors import remove_none
+
+@remove_none
+def lift_reader():
+    # Create an instance of the medium motor on port B
+    motor = MediumMotor('outB', speed=10)
+    combination = []
+    duration = 2
+
+    # Set the motor speed and run the motor for the specified amount of time
+    motor.on()
+    start_time = time()
+    while (time() - start_time) < duration:
+        key = read_barcode()
+        combination.append(key)
+
+    motor.stop()
+
+    return combination
 
 
 def read_barcode():
-    # Create a ColorSensor and TouchSensor object
-    sensor = ColorSensor()
-    touch_sensor = TouchSensor()
+    # Create a ColorSensor object
+    color_sensor = ColorSensor()
 
-    # Initialize an empty list to store the colors
-    colors = []
+    # Read colors for 0.1 seconds, 40 times (4 combinations of 4 digits)
+        # Get the current color detected by the sensor
+    color = color_sensor.color
 
-    # Initialize a variable to keep track of the previous state of the touch sensor
-    prev_touch_state = True
+    # If the color is black, append 1 to the current combination
+    if color == ColorSensor.COLOR_BLACK:
+            print('black')
+            return 1
 
-    # Read colors until the list has a length of 4
-    while len(colors) < 4:
-        # Get the current state of the touch sensor
-        curr_touch_state = touch_sensor.is_pressed
-
-        # If the touch sensor was previously released and is now pressed, read a new color
-        if not prev_touch_state and curr_touch_state:
-            # Get the current color detected by the sensor
-            color = sensor.color
-
-            # If the color is black, append 1 to the colors list
-            if color == ColorSensor.COLOR_BLACK:
-                colors.append(1)
-
-            # If the color is white, append 0 to the colors list
-            elif color == ColorSensor.COLOR_WHITE:
-                colors.append(0)
-
-            else:
-                pass
-
-        # Update the previous state of the touch sensor
-        prev_touch_state = curr_touch_state
-
-    # Return the list of colors
-    return colors
-
-
+    # If the color is white, append 0 to the current combination
+    elif color == ColorSensor.COLOR_WHITE:
+            print('white')
+            return 0
+    
 def read_black():
     # Create instances of the ColorSensor and TouchSensor classes
     sensor = ColorSensor()
-    touch_sensor = TouchSensor()
     
     # Loop forever
-    while True:
-        # Pause for 0.2 seconds
-        sleep(0.2)
         
         # Read the percentage of reflected light intensity from the color sensor
-        perc = sensor.reflected_light_intensity
-        
-        # If the percentage is less than 9, return 5
-        if perc < 9:
-            return 5
-        
-        # If the percentage is less than 40, return 1
-        elif perc < 40:
-            return 1
-        
-        # If the touch sensor is pressed, break out of the loop
-        elif touch_sensor.is_pressed:
-            break
-        
-        # If none of the above conditions 
+    perc = sensor.reflected_light_intensity
+    
+    # If the percentage is less than 9, return 5
+    if perc < 9:
+        return 0
+    
+    # If the percentage is less than 40, return 1
+    elif perc < 40:
+        return 1
 
-        
-        
+    
+       
 def box():
     # Define a dictionary of box types, where each box type is represented by a list of 4 values.
     boxType = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
