@@ -3,22 +3,16 @@ import ev3dev2.sensor.lego as sensor
 from func.lift import lift_object
 from time import sleep as wait
 
-LEFT_WHEEL_PORT = 'outA'
-RIGHT_WHEEL_PORT = 'outD'
-GYRO_PORT = 'in1'
-ULTRASONIC_PORT = 'in3'
 DISTANCE_OF_APPROACH_IN = 2.5
 
-left_motor = motor.LargeMotor(LEFT_WHEEL_PORT)
-right_motor = motor.LargeMotor(RIGHT_WHEEL_PORT)
-gyro_sensor = sensor.GyroSensor(GYRO_PORT)
-ultrasonic_sensor = sensor.UltrasonicSensor(ULTRASONIC_PORT)
+left_motor = motor.LargeMotor('outA')
+right_motor = motor.LargeMotor('outD')
+gyro_sensor = sensor.GyroSensor('in1')
+ultrasonic_sensor = sensor.UltrasonicSensor('in3')
 
 def drive_forward(distance_in_cm, OBJECT_ON_OFF):
-    left_motor.reset()
-    gyro_sensor.reset()
-    target_angle = 0
-    speed_in_cm_per_sec = 10
+    left_motor.reset(); gyro_sensor.reset()
+    target_angle = 0; speed_in_cm_per_sec = 10
 
     speed_in_deg_per_sec = speed_in_cm_per_sec / (2 * 3.14 * 2.8) * 360
     degrees_to_turn = distance_in_cm / (2 * 3.14 * 2.8) * 360
@@ -33,9 +27,8 @@ def drive_forward(distance_in_cm, OBJECT_ON_OFF):
         left_motor.speed_sp = speed_in_deg_per_sec + correction_factor
         right_motor.speed_sp = speed_in_deg_per_sec - correction_factor
 
-        if ultrasonic_sensor.distance_inches <= 2.5 and OBJECT_ON_OFF:
-            left_motor.off(brake=True)
-            right_motor.off(brake=True)
+        if ultrasonic_sensor.distance_inches <= DISTANCE_OF_APPROACH_IN and OBJECT_ON_OFF:
+            left_motor.off(brake=True); right_motor.off(brake=True)
             break
 
     actual_distance = (left_motor.position + right_motor.position) / 2 / 360 * (2 * 3.14 * 2.8)
@@ -44,8 +37,7 @@ def drive_forward(distance_in_cm, OBJECT_ON_OFF):
     if OBJECT_ON_OFF: print('The obstacle is ', ultrasonic_sensor.distance_inches, ' inches forward.')
 
 def slowly_approach():
-    left_motor.reset()
-    gyro_sensor.reset()
+    left_motor.reset(); gyro_sensor.reset()
     target_angle = 0
     speed_in_cm_per_sec = 10
 
@@ -63,8 +55,7 @@ def slowly_approach():
         right_motor.speed_sp = speed_in_deg_per_sec - correction_factor
 
         if ultrasonic_sensor.distance_centimeters <= .5:
-                    left_motor.off(brake=True)
-                    right_motor.off(brake=True)
+                    left_motor.off(brake=True); right_motor.off(brake=True)
                     break
     
     actual_distance = (left_motor.position + right_motor.position) / 2 / 360 * (2 * 3.14 * 2.8)
