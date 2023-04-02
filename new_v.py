@@ -4,6 +4,11 @@ from func.drive import *
 from func.turn import *
 from func.barcode import *
 from func.lift import *
+from func.sound import *
+
+play_sound('fire_force.mp3')
+play_sound('time_stop.mp3')
+
 
 # BOXTYPE = {'BoxType 1': [0, 0, 0, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}
 BOXTYPE = {'BoxType 1': [0, 1, 1, 1], 'BoxType 2': [1, 0, 1, 0], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0]}

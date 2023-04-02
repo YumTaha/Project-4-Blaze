@@ -2,6 +2,7 @@ import ev3dev2.motor as motor
 import ev3dev2.sensor.lego as sensor
 from func.lift import lift_object
 from time import sleep as wait
+
 LEFT_WHEEL_PORT = 'outA'
 RIGHT_WHEEL_PORT = 'outD'
 GYRO_PORT = 'in1'
@@ -61,7 +62,7 @@ def slowly_approach():
         left_motor.speed_sp = speed_in_deg_per_sec + correction_factor
         right_motor.speed_sp = speed_in_deg_per_sec - correction_factor
 
-        if ultrasonic_sensor.distance_centimeters <= .1:
+        if ultrasonic_sensor.distance_centimeters <= .5:
                     left_motor.off(brake=True)
                     right_motor.off(brake=True)
                     break
