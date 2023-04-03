@@ -1,4 +1,4 @@
-from ev3dev2.motor import MediumMotor, OUTPUT_B
+from ev3dev2.motor import MediumMotor
 from ev3dev2.sensor.lego import ColorSensor
 from func.drive import *
 from func.sound import *
@@ -13,6 +13,7 @@ DOWNWARD_ANGLE = 13.05
 # ULTRASONIC AROUND 2.5 INCHES
 def scan_barcode(type_of_box):
     col_sensor = ColorSensor(); motor = MediumMotor()
+
 
     for var in range(4):
         wait(1)

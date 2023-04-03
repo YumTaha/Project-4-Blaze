@@ -40,6 +40,10 @@ def drive_forward(distance_in_cm, OBJECT_ON_OFF, start='no'):
     print('Actual distance traveled:', actual_distance)
     if OBJECT_ON_OFF: print('The obstacle is ', ultrasonic_sensor.distance_inches, ' inches forward.')
 
+    left_motor.reset(); right_motor.reset(); gyro_sensor.reset()
+
+
+
 def slowly_approach():
     left_motor.reset(); right_motor.reset(); gyro_sensor.reset()
     target_angle = 0
@@ -66,6 +70,8 @@ def slowly_approach():
 
     print('Actual approach distance:', actual_distance)
     
-    left_motor.reset(); gyro_sensor.reset()
+
+    left_motor.reset(); right_motor.reset(); gyro_sensor.reset()
     wait(2)
     lift_object()
+    
