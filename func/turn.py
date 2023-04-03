@@ -1,40 +1,41 @@
 from ev3dev2.motor import OUTPUT_A, OUTPUT_D, LargeMotor
 from ev3dev2.sensor.lego import GyroSensor as GS
+from time import sleep as wait
 
-SPEED = 20
-gyro = GS('in1')
-GYRO_INITIAL = gyro.angle
-
-
-def turn(degrees, dirc='right'):
+def turn(angle):
+    # Connect to the gyro sensor and reset it
+    gyro = GS()
     gyro.reset()
-    
-    speed_turn = int(SPEED / 4)
 
+    # Connect to the motors and set their speed and stop mode
     left_motor, right_motor = LargeMotor(OUTPUT_A), LargeMotor(OUTPUT_D)
-    left_motor.reset(); right_motor.reset()
 
-    if degrees > 0:
-        if dirc == 'right':
-            left_speed = speed_turn; right_speed = -speed_turn
-        elif dirc == 'left':
-            left_speed = -speed_turn; right_speed = speed_turn
+    speed = 30
+    stop_mode = 'hold'
 
-    while True:
-        angle = gyro.angle - GYRO_INITIAL
+    # Determine the direction of the turn (clockwise or counterclockwise)
+    if angle > 0: left_speed = speed; right_speed = -speed
+    else: left_speed = -speed; right_speed = speed
 
-        if abs(angle - degrees) > 1:
-            left_speed = -speed_turn if dirc == 'right' else speed_turn
-            right_speed = speed_turn if dirc == 'right' else -speed_turn
+    # Calculate the target angle based on the current angle and the desired turn angle
+    current_angle = gyro.angle
+    target_angle = current_angle + angle
 
-            if angle <= degrees:
-                left_speed, right_speed = right_speed, left_speed
+    # Turn the robot until it reaches the target angle
+    while abs(gyro.angle - target_angle) > 1:
+        # Calculate the error between the current angle and the target angle
+        error = target_angle - gyro.angle
 
+        # Calculate the correction speed using proportional control
+        correction_speed = error * 1.5
 
-            left_motor.on(speed=left_speed); right_motor.on(speed=right_speed)
-        else:
-            gyro.reset()
-            left_motor.off(brake=True); right_motor.off(brake=True)
-            break
-        
-    print("Actual angle turned:", angle)
+        # Set the motor speeds based on the correction speed and the direction of the turn
+        left_motor.run_forever(speed_sp=left_speed + correction_speed, stop_action=stop_mode)
+        right_motor.run_forever(speed_sp=right_speed - correction_speed, stop_action=stop_mode)
+
+        # Wait for a short time to give the robot time to turn
+        wait(0.01)
+
+    # Stop the motors
+    left_motor.stop(stop_action=stop_mode)
+    right_motor.stop(stop_action=stop_mode)
