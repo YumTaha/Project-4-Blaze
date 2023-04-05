@@ -1,0 +1,16 @@
+home A = (6in, -6in)
+home B = (102in, -6in)
+home C = (6in, 114in)
+home D = (102in, 114in)
+
+from home [A to C] [B to D] (120in)
+
+from home [A to B] [C to D] (96in)
+
+Shelve length = (12in, 36in)
+
+from home A:
+    ( 6 + x, y -
+     6)
+    
+

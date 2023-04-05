@@ -5,5 +5,5 @@ LIFT_MOTOR_DEGREE = 90
 
 lift_motor = MediumMotor('outB')
 
-def lift_object(): wait(1); lift_motor.on_for_degrees(LIFT_MOTOR_POWER, LIFT_MOTOR_DEGREE)
-def drop_object(): wait(1); lift_motor.on_for_degrees(LIFT_MOTOR_POWER, -LIFT_MOTOR_DEGREE)
+def liftdrop_object(sign=1): wait(1); lift_motor.on_for_degrees(LIFT_MOTOR_POWER, (LIFT_MOTOR_DEGREE if sign>0 else -LIFT_MOTOR_DEGREE))
+# def drop_object(): wait(1); lift_motor.on_for_degrees(LIFT_MOTOR_POWER, -LIFT_MOTOR_DEGREE)

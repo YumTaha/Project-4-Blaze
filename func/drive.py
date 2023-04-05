@@ -1,6 +1,6 @@
 import ev3dev2.motor as motor
 import ev3dev2.sensor.lego as sensor
-from func.lift import lift_object
+from func.lift import *
 from time import sleep as wait
 
 DISTANCE_OF_APPROACH_IN = 2.6
@@ -10,7 +10,7 @@ right_motor = motor.LargeMotor('outD')
 gyro_sensor = sensor.GyroSensor('in1')
 ultrasonic_sensor = sensor.UltrasonicSensor('in3')
 
-def drive_forward(distance_in_cm, OBJECT_ON_OFF, start='no'):
+def drive(distance_in_cm, OBJECT_ON_OFF, start='no'):
     if start == 'yes':
         mediumM = motor.MediumMotor(); mediumM.position = 0; wait(1)
         mediumM.on_for_degrees(-10, 56.75); mediumM.stop(); mediumM.off(); wait(1)
@@ -73,5 +73,5 @@ def slowly_approach():
 
     left_motor.reset(); right_motor.reset(); gyro_sensor.reset()
     wait(2)
-    lift_object()
+    liftdrop_object(sign=1)
     

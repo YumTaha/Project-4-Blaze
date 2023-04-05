@@ -1,11 +1,9 @@
 from ev3dev2.motor import OUTPUT_A, OUTPUT_D, LargeMotor
-from ev3dev2.sensor.lego import GyroSensor as GS
+from ev3dev2.sensor.lego import GyroSensor
 from time import sleep as wait
 
 def turn(angle):
-    # Connect to the gyro sensor and reset it
-    gyro = GS()
-    gyro.reset()
+    gyro = GyroSensor(); gyro.reset()
 
     # Connect to the motors and set their speed and stop mode
     left_motor, right_motor = LargeMotor(OUTPUT_A), LargeMotor(OUTPUT_D)
@@ -13,7 +11,7 @@ def turn(angle):
     speed = 30
     stop_mode = 'hold'
 
-    # Determine the direction of the turn (clockwise or counterclockwise)
+    # Determine the direction(CW or CCW)
     if angle > 0: left_speed = speed; right_speed = -speed
     else: left_speed = -speed; right_speed = speed
 
@@ -33,9 +31,8 @@ def turn(angle):
         left_motor.run_forever(speed_sp=left_speed + correction_speed, stop_action=stop_mode)
         right_motor.run_forever(speed_sp=right_speed - correction_speed, stop_action=stop_mode)
 
-        # Wait for a short time to give the robot time to turn
+        # give robot time to turn
         wait(0.01)
 
     # Stop the motors
-    left_motor.stop(stop_action=stop_mode)
-    right_motor.stop(stop_action=stop_mode)
+    left_motor.stop(stop_action=stop_mode); right_motor.stop(stop_action=stop_mode)
