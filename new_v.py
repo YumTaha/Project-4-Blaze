@@ -18,8 +18,8 @@ def main():
     # drive(inches_to_cm(18), OBJECT_ON_OFF)
     # if OBJECT_ON_OFF: print('This barcode is the right one? NO'); play_sound('wrong barcode')
     # else: print('This barcode is the right one? YES'); play_sound('correct barcode'); beep()
-    liftdrop_object(sign=-1)
-    # pass
+    # liftdrop_object(sign=-1)
+    pass
     
 
 

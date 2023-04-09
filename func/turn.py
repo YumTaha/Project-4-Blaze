@@ -8,7 +8,7 @@ def turn(angle):
     # Connect to the motors and set their speed and stop mode
     left_motor, right_motor = LargeMotor(OUTPUT_A), LargeMotor(OUTPUT_D)
 
-    speed = 30
+    speed = 10
     stop_mode = 'hold'
 
     # Determine the direction(CW or CCW)
@@ -18,9 +18,11 @@ def turn(angle):
     # Calculate the target angle based on the current angle and the desired turn angle
     current_angle = gyro.angle
     target_angle = current_angle + angle
+    
 
     # Turn the robot until it reaches the target angle
-    while abs(gyro.angle - target_angle) > 1:
+    while abs(gyro.angle - target_angle) >= 1:
+        print((gyro.angle, target_angle))
         # Calculate the error between the current angle and the target angle
         error = target_angle - gyro.angle
 
