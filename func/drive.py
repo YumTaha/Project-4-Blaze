@@ -4,7 +4,7 @@ from func.lift import *
 from time import sleep as wait
 
 DISTANCE_OF_APPROACH_IN = 2.6
-
+LIFTING_OF_START = 56.6
 left_motor = motor.LargeMotor('outA')
 right_motor = motor.LargeMotor('outD')
 gyro_sensor = sensor.GyroSensor('in1')
@@ -13,7 +13,7 @@ ultrasonic_sensor = sensor.UltrasonicSensor('in3')
 def drive(distance_in_cm, OBJECT_ON_OFF, start='no'):
     if start == 'yes':
         mediumM = motor.MediumMotor(); mediumM.position = 0; wait(1)
-        mediumM.on_for_degrees(-10, 56.75); mediumM.stop(); mediumM.off(); wait(1)
+        mediumM.on_for_degrees(-10, LIFTING_OF_START); mediumM.stop(); mediumM.off(); wait(1)
 
     left_motor.reset(); right_motor.reset(); gyro_sensor.reset()
     target_angle = 0; speed_in_cm_per_sec = 10
@@ -73,5 +73,6 @@ def slowly_approach():
 
     left_motor.reset(); right_motor.reset(); gyro_sensor.reset()
     wait(2)
+
     liftdrop_object(sign=1)
     

@@ -24,7 +24,7 @@ def main2():
     drive(inches_to_cm(-6), OBJECT_ON_OFF= True)
 
 if __name__ == '__main__':
-    main1()
+    main2()
 
 
 
