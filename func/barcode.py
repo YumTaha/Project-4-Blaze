@@ -11,7 +11,7 @@ UPWARD_ANGLE = 13.4
 DOWNWARD_ANGLE = 13
 DIS_SECOND = 0.245
 BACK_ROTATIONS = 0.7
-ROTATIONS = 0.4
+ROTATIONS = 0.43
 
 # AROUND 5 AND 6 INCHES BETWEEN CENTER OF THE WHEEL TO THE BARCODE (5.5)
 # ULTRASONIC AROUND 2.5 INCHES
@@ -206,7 +206,7 @@ def scan_barcode_hor_reflect(type_of_box):
 
         print('Scanning barcode...')
         box_type = []
-        if col_sensor.reflected_light_intensity < 30: box_type.append(1) #black
+        if col_sensor.reflected_light_intensity < 15: box_type.append(1) #black
         else: box_type.append(0) #White
         print(box_type)
 
@@ -216,9 +216,9 @@ def scan_barcode_hor_reflect(type_of_box):
             tank_drive.on_for_seconds(10, 10, DIS_SECOND)
             tank_drive.off()
 
-            if col_sensor.reflected_light_intensity < 30: box_type.append(1) #black
+            if col_sensor.reflected_light_intensity < 15: box_type.append(1) #black
             else: box_type.append(0) #White
-            print(box_type)
+            print((box_type, col_sensor.reflected_light_intensity))
 
         print('final ', box_type)
         if len(box_type) != 4:
@@ -235,11 +235,11 @@ def scan_barcode_hor_reflect(type_of_box):
                     wait(0.5)
                     tank_drive.on_for_seconds(-5,-5,1)
                     turn(20)
-                    tank_drive.on_for_seconds(10,10,2)
+                    tank_drive.on_for_seconds(10,10,1.5)
                     liftdrop_object(sign=1)
                     tank_drive.on_for_seconds(-5,-5,2)
                     wait(3)
-                    turn(-90)
+                    turn(-83)
                     OBJECT_ON_OFF = False
                     return OBJECT_ON_OFF
                 else: return True
@@ -249,7 +249,7 @@ def scan_barcode_hor_reflect(type_of_box):
         box_type = []
 
         # Repeat the scanning process in the opposite direction
-        if col_sensor.reflected_light_intensity < 30: box_type.append(1) #black
+        if col_sensor.reflected_light_intensity < 15: box_type.append(1) #black
         else: box_type.append(0) #White
         print(box_type)
         
@@ -259,7 +259,7 @@ def scan_barcode_hor_reflect(type_of_box):
             tank_drive.on_for_seconds(-10, -10, DIS_SECOND)
             tank_drive.off()
 
-            if col_sensor.reflected_light_intensity < 30: box_type.append(1) #black
+            if col_sensor.reflected_light_intensity < 15: box_type.append(1) #black
             else: box_type.append(0) #White
             print(box_type)
             wait(1)
@@ -280,12 +280,12 @@ def scan_barcode_hor_reflect(type_of_box):
                     turn(60) #Turning
                     wait(0.5)
                     tank_drive.on_for_seconds(-5,-5,1)
-                    turn(20)
-                    tank_drive.on_for_seconds(10,10,2)
+                    turn(25)
+                    tank_drive.on_for_seconds(10,10,1.5)
                     liftdrop_object(sign=1)
                     tank_drive.on_for_seconds(-5,-5,2)
                     wait(3)
-                    turn(-98)
+                    turn(-85)
                     OBJECT_ON_OFF = False
                     return OBJECT_ON_OFF
                 else: return True 

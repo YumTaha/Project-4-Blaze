@@ -46,17 +46,17 @@ def drive(distance_in_cm, OBJECT_ON_OFF, start='no'):
         
         current_angle = gyro_sensor.angle
         correction_factor, prev_error, integral = pid_control(target_angle, current_angle, prev_error, integral, kp, ki, kd)
-        correction_factor *= 10  # amplify the correction to make it stronger
+        correction_factor *= 1  # amplify the correction to make it stronger
         left_motor.speed_sp = (speed_in_deg_per_sec + correction_factor)
         right_motor.speed_sp = (speed_in_deg_per_sec - correction_factor)
         left_motor.run_forever()
         right_motor.run_forever()
 
-        print(((correction_factor, current_angle), (right_motor.speed_sp, left_motor.speed_sp)))
+        # print(((correction_factor, current_angle), (right_motor.speed_sp, left_motor.speed_sp)))
 
         if ultrasonic_sensor.distance_inches <= DISTANCE_OF_APPROACH_IN and OBJECT_ON_OFF:
-            left_motor.stop(brake=True)
-            right_motor.stop(brake=True)
+            left_motor.stop(stop_action='hold')
+            right_motor.stop(stop_action='hold')
             break
 
     left_motor.reset()
