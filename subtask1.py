@@ -18,7 +18,7 @@ def main():
     turn(90)
     drive(inches_to_cm(6 + LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= True)
     wait(5)
-    drive(inches_to_cm(90 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= True)
+    drive(inches_to_cm(30 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= True)
     turn(90)
     drive(inches_to_cm(36), OBJECT_ON_OFF= True)
 

@@ -12,10 +12,10 @@ BOXTYPE = {'BoxType 1': [0, 0, 0, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0
 
 def main():
     # drive(inches_to_cm(18), OBJECT_ON_OFF= True, start='yes')
-    # turn(90)
+    turn(-180)
     # drive(inches_to_cm(18), OBJECT_ON_OFF= True)
     # OBJECT_ON_OFF = scan_barcode(BOXTYPE['special'])
-    # drive(inches_to_cm(18), OBJECT_ON_OFF)
+    # drive(inches_to_cm(20), OBJECT_ON_OFF=True)
     # if OBJECT_ON_OFF: print('This barcode is the right one? NO'); play_sound('wrong barcode')
     # else: print('This barcode is the right one? YES'); play_sound('correct barcode'); beep()
     # liftdrop_object(sign=-1)

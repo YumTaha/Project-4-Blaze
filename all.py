@@ -17,17 +17,15 @@ LOCATION = {'7': STOP_WHERE, '8': STOP_WHERE+6, '9': STOP_WHERE+12, '10': STOP_W
 BOX_NUMBER = '9'
 
 def main():
-    drive(inches_to_cm(37.2), OBJECT_ON_OFF= True)
-    turn(90)
+    # drive(inches_to_cm(37.2), OBJECT_ON_OFF= True)
+    # turn(90)
     drive(inches_to_cm(LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= True)
     OBJECT_ON_OFF = scan_barcode_hor_reflect(BOXTYPE['BoxType 2'])
     if OBJECT_ON_OFF: print('This barcode is the right one? NO'); play_sound('FUCK ENED')
     else: print('This barcode is the right one? YES'); play_sound('I love doctor KWUIMI'); beep()
-    liftdrop_object(sign=-1); drive(inches_to_cm(2), OBJECT_ON_OFF= False); liftdrop_object(sign=1)
-    drive(inches_to_cm(90 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= False)
+    drive(inches_to_cm(10 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= False)
     turn(90)
-    liftdrop_object(sign=-1); drive(inches_to_cm(2), OBJECT_ON_OFF= False); liftdrop_object(sign=1)
-    drive(inches_to_cm(30), OBJECT_ON_OFF= False)
+    drive(inches_to_cm(20), OBJECT_ON_OFF= False)
     if OBJECT_ON_OFF: pass
     else: liftdrop_object(sign=-1)
 

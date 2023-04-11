@@ -8,7 +8,7 @@ def turn(angle):
     # Connect to the motors and set their speed and stop mode
     left_motor, right_motor = LargeMotor(OUTPUT_A), LargeMotor(OUTPUT_D)
 
-    speed = 10
+    speed = 30
     stop_mode = 'hold'
 
     # Determine the direction(CW or CCW)
