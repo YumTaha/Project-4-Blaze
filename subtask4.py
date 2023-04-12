@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from func.drive import *
+from INFO import *
 from func.turn import *
 from func.barcode import *
 from func.lift import *
@@ -11,14 +12,14 @@ def inches_to_cm(inches): return inches * 2.54
 # 1 = BLACK
 
 BOXTYPE = {'BoxType 1': [0, 0, 0, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0, 0, 1, 1], 'BoxType 4': [0, 1, 1, 0], 'special': [1, 0, 1, 0]}
+STOP_WHERE = 3
+LOCATION = {'7': STOP_WHERE, '8': STOP_WHERE+6, '9': STOP_WHERE+12, '10': STOP_WHERE+18, '11': STOP_WHERE+24, '12': STOP_WHERE+30}
+
 
 def main():
     liftdrop_object(sign=1)
-    drive(inches_to_cm(-3), OBJECT_ON_OFF= True)
-    turn(90)
-    drive(inches_to_cm(36), OBJECT_ON_OFF= True)
+    drive(inches_to_cm(42 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= False)
     liftdrop_object(sign=-1)
-    
 
 
 if __name__ == '__main__':

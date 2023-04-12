@@ -199,7 +199,7 @@ def scan_barcode_hor_reflect(type_of_box):
     tank_drive.off()
 
     tank_drive.on_for_rotations(10,10,ROTATIONS); tank_drive.off()
-    for i in range(4):
+    for i in range(2):
         wait(1)
         
         
