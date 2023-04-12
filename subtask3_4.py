@@ -17,11 +17,11 @@ LOCATION = {'7': STOP_WHERE, '8': STOP_WHERE+6, '9': STOP_WHERE+12, '10': STOP_W
 
 
 def main():
-    drive(inches_to_cm(1), OBJECT_ON_OFF= True)
+    # drive(inches_to_cm(1), OBJECT_ON_OFF= True)
     OBJECT_ON_OFF = scan_barcode_hor_reflect(BOXTYPE[TYPE])
     if OBJECT_ON_OFF: print('This barcode is the right one? NO')
     else: print('This barcode is the right one? YES')
-    drive(inches_to_cm(42 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= False)
+    drive(inches_to_cm(37 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= False)
     liftdrop_object(sign=-1)
     
     

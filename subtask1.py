@@ -18,11 +18,11 @@ LOCATION = {'7': STOP_WHERE, '8': STOP_WHERE+6, '9': STOP_WHERE+12, '10': STOP_W
 
 def main():
     drive(inches_to_cm(38), OBJECT_ON_OFF= True)
-    turn(90)
+    turn(88)
     drive(inches_to_cm(LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= True)
     wait(5)
     drive(inches_to_cm(94 - LOCATION[BOX_NUMBER]), OBJECT_ON_OFF= True)
-    turn(90)
+    turn(88)
     drive(inches_to_cm(39), OBJECT_ON_OFF= True)
 
 if __name__ == '__main__':

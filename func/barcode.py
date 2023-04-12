@@ -195,6 +195,7 @@ def scan_barcode_hor_reflect(type_of_box):
     
     # while col_sensor.color not in [4, 7]: tank_drive.on(10, 10); print(col_sensor.color_name)
     col_sensor.mode = 'COL-REFLECT'
+    tank_drive.off()
     while col_sensor.reflected_light_intensity == 0: tank_drive.on(10, 10)
     tank_drive.off()
 
