@@ -9,9 +9,6 @@ from home [A to B] [C to D] (96in)
 
 Shelve length = (12in, 36in)
 
-from home A:
-    ( 6 + x, y -
-     6)
     
 
 

@@ -12,7 +12,7 @@ BOXTYPE = {'BoxType 1': [0, 0, 0, 1], 'BoxType 2': [0, 1, 0, 1], 'BoxType 3': [0
 
 def main():
     # drive(inches_to_cm(18), OBJECT_ON_OFF= True, start='yes')
-    turn(360)
+    # turn(360)
     # drive(inches_to_cm(18), OBJECT_ON_OFF= True)
     # OBJECT_ON_OFF = scan_barcode(BOXTYPE['special'])
     # drive(inches_to_cm(20), OBJECT_ON_OFF=True)
