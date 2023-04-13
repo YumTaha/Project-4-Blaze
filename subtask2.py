@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-from func.drive import *
 from INFO import *
+from func.drive import *
 from func.turn import *
 from func.barcode import *
 from func.lift import *
 from func.sound import *
-
-
-def inches_to_cm(inches): return inches * 2.54
 
 def main():
     turn(180)

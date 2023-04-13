@@ -22,9 +22,7 @@ def turn(angle):
 
     # Turn the robot until it reaches the target angle
     while abs(gyro.angle - target_angle) >= 1:
-        # print((gyro.angle, target_an
-        # 
-        # gle))
+        # print((gyro.angle, target_angle))
         # Calculate the error between the current angle and the target angle
         error = target_angle - gyro.angle
 
